@@ -37,8 +37,10 @@ const usePersistedState = (initialState, key, { get, set }) => {
 
       setState(newStateValue);
 
-      // inform all of the other instances in this tab
-      globalState.current.emit(newState);
+      if (globalState && globalState.current && globalState.current.emit) {
+        // inform all of the other instances in this tab
+        globalState.current.emit(newState);
+      }
     },
     [state, set, key]
   );
